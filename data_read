@@ -1,0 +1,81 @@
+import 'package:flutter/material.dart';
+import 'package:mlkit/mlkit.dart';
+
+class DataRead extends StatefulWidget {
+  List<VisionText> currentLabels;
+  DataRead({this.currentLabels});
+
+  @override
+  _DataReadState createState() => _DataReadState();
+}
+
+class _DataReadState extends State<DataRead> {
+
+  List<VisionText> get texts => widget.currentLabels;
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: Scaffold(
+        backgroundColor: Colors.white,
+        appBar: AppBar(
+          title: Text('Data Read'),
+        ),
+        /*  drawer: Drawer(
+          child: ListView(
+            children: <Widget>[
+              DrawerHeader(
+                child:Text('Drawer Header',
+                  textAlign: TextAlign.center ,),
+                decoration: BoxDecoration(
+                  color: Colors.blue,
+                ),
+              ),
+              ListTile(
+                leading: Icon(Icons.file_upload),
+                title: Text('Upload Invoice'),
+                onTap: () async {
+                 Navigator.pop(context);
+                  },
+              ),
+            ],
+          ),
+        ),*/
+        body: _buildBody(),
+      ),
+    );
+  }
+  Widget _buildBody() {
+    return Container(
+      padding: EdgeInsets.only(left: 15.0, right: 15.0, top: 15.0),
+      color: Colors.white,
+      child: SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            //_buildImage(),
+            Container(
+              child: ListView.builder(
+                  padding: const EdgeInsets.all(1.0),
+                  shrinkWrap: true,
+                  itemCount: texts.length,
+                  itemBuilder: (context, i) {
+                    return _buildRow(texts[i].text);
+                  }),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+  Widget _buildRow(String text) {
+    return ListTile(
+      title: Text(
+        "Text: ${text}",
+      ),
+      dense: true,
+    );
+  }
+
+}
